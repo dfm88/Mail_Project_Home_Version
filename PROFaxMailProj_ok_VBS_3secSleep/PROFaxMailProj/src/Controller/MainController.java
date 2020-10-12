@@ -288,26 +288,27 @@ if(getInizio()>0)
 {
     compRap.metodoCheCompilaIRapporti(getInizio());
     System.out.println("fatto");
+    System.out.println("2 - KKKKKKKKKKKKKKKKK "+getInizio());
 }
-                    System.out.println("2 - KKKKKKKKKKKKKKKKK "+getInizio());
+                    System.out.println("3 - KKKKKKKKKKKKKKKKK "+getInizio());
 
                     System.out.println("LISTA NOMI FILE -->"+compRap.getListaNomiFile().get(i)+ " <---");
                     setFine(compRap.getListaNomiFile().size());
                     updateProgress(i+1, compRap.getListaNomiFile().size());
-                    System.out.println("3 - KKKKKKKKKKKKKKKKK "+getInizio());
+                    System.out.println("4 - KKKKKKKKKKKKKKKKK "+getInizio());
 
                     System.out.println((getInizio()+1)+".c) "+i);
-                    System.out.println("4 - KKKKKKKKKKKKKKKKK "+getInizio());
+                    System.out.println("5 - KKKKKKKKKKKKKKKKK "+getInizio());
 
 
                     updateMessage(compRap.getListaNomiFile().get(i));
-                    System.out.println("5 - KKKKKKKKKKKKKKKKK "+getInizio());
-                    Thread.sleep(3300);
                     System.out.println("6 - KKKKKKKKKKKKKKKKK "+getInizio());
+                    Thread.sleep(3300);
+                    System.out.println("7 - KKKKKKKKKKKKKKKKK "+getInizio());
 
                     if (getInizio()==(compRap.getListaNomiFile().size())-1)
                     {
-
+                        System.out.println("8 - KKKKKKKKKKKKKKKKK "+getInizio());
                         System.out.println("LO SETTOOOOOOO "+processoFinito+" perchè getInizio = "+getInizio()+" e lunghezzaLista = "+(compRap.getListaNomiFile().size()-1));
                         processoFinito = true;
                     }
@@ -316,7 +317,7 @@ if(getInizio()>0)
                     {
                         avvioButton.setDisable(false);
                         updateMessage("PROCESSO COMPLETATO");
-
+                        System.out.println("9 - KKKKKKKKKKKKKKKKK "+getInizio());
                         long finishTime = (System.currentTimeMillis())-startTime;
 
                             long millis = finishTime % 1000;
@@ -334,18 +335,21 @@ if(getInizio()>0)
 
                     }
 
+                    System.out.println("10 - KKKKKKKKKKKKKKKKK "+getInizio());
+
                     System.out.println("il processo, all'interazione '"+ i +"' è finito ? "+processoFinito);
 
                 }
                 return null;
             }
         };
+        System.out.println("11 - KKKKKKKKKKKKKKKKK "+getInizio());
          System.out.println("Contatore GetInizio : "+getInizio());
 
          compRap.metodoCheCompilaIRapporti(getInizio());
      //   Thread.sleep(3300);
 
-        System.out.println("7 - KKKKKKKKKKKKKKKKK "+getInizio());
+        System.out.println("12 - KKKKKKKKKKKKKKKKK "+getInizio());
 
         task.messageProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -356,7 +360,7 @@ if(getInizio()>0)
             }
         });
 
-        System.out.println("8 - KKKKKKKKKKKKKKKKK "+getInizio());
+        System.out.println("13 - KKKKKKKKKKKKKKKKK "+getInizio());
 
         progressBar.progressProperty().unbind();
         progressBar.progressProperty().bind(task.progressProperty());
@@ -364,9 +368,11 @@ if(getInizio()>0)
         Thread th = new Thread(task);
         th.setDaemon(true);
         th.start();
+        System.out.println("14 - KKKKKKKKKKKKKKKKK "+getInizio());
 
       //  compRap.salvaUltimoIdRapport();
         compRap.chiudiTuttiFile();
+        System.out.println("15 - KKKKKKKKKKKKKKKKK "+getInizio());
 
            // compRap.eliminaFileExcel();
 
@@ -406,10 +412,11 @@ if(getInizio()>0)
 
             }
         });
-
+        System.out.println("16 - KKKKKKKKKKKKKKKKK "+getInizio());
         Thread th2 = new Thread(task2);
         th2.setDaemon(true);
         th2.start();
+        System.out.println("17 - KKKKKKKKKKKKKKKKK "+getInizio());
 
         /********************************************************************************/
         Task<Void> task3 = new Task<Void>() {
