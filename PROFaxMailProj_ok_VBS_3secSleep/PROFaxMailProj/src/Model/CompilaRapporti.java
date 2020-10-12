@@ -139,85 +139,101 @@ public class CompilaRapporti
 
 
 
-    public void metodoCheCompilaIRapporti(int i) throws Exception
+    public boolean metodoCheCompilaIRapporti() throws Exception
     {
 
-    //    for(int i = 0; i< getDatiFromMattinale.getListaRagioniSociali().size();i++) {
-            //salvo e incremento l'IDRapporto
-            fis = new FileInputStream(getPercorsoMaster());
-            wb = WorkbookFactory.create(fis);
+        for (int i = 0; i < getDatiFromMattinale.getListaRagioniSociali().size(); i++) {
+                //salvo e incremento l'IDRapporto
+            try {  fis = new FileInputStream(getPercorsoMaster());
+                wb = WorkbookFactory.create(fis);
 
-            //Recupero l'ultimo IDRapporto Salvato 80761
-            sh = wb.getSheet(wb.getSheetName(0));
-
-
+                //Recupero l'ultimo IDRapporto Salvato 80761
+                sh = wb.getSheet(wb.getSheetName(0));
 
 
-            Cell cellIDRapporto = sh.getRow(11).getCell(5);
-            setIDRapporto(getIDRapporto() + 1);
-            cellIDRapporto.setCellValue(getIDRapporto());
+                Cell cellIDRapporto = sh.getRow(11).getCell(5);
+                setIDRapporto(getIDRapporto() + 1);
+                cellIDRapporto.setCellValue(getIDRapporto());
 
 
-            //salvo la ragione sociale
-            Cell cellRagioneSociale = sh.getRow(4).getCell(8);
+                //salvo la ragione sociale
+                Cell cellRagioneSociale = sh.getRow(4).getCell(8);
 
-            cellRagioneSociale.setCellValue(getDatiFromMattinale.getListaRagioniSociali().get(i));
-
-
-            //salvo data e ora dell'evento
-            Cell cellDataEOra = sh.getRow(17).getCell(4);
-
-            cellDataEOra.setCellValue(getDatiFromMattinale.getListaDateEOra().get(i).toLocaleString());
-
-            //faccio il time stamp della creazione del file
-            Cell cellTimeStamp = sh.getRow(8).getCell(1);
-
-            cellTimeStamp.setCellValue(timestamp.toString().substring(0, 19));//per tagliare i millesimi
-
-            //salvo il tipo di segnalazione
-            Cell cellTipoSegnalazione = sh.getRow(18).getCell(2);
-
-            cellTipoSegnalazione.setCellValue(getDatiFromMattinale.getListaTipoAllarme().get(i));
+                cellRagioneSociale.setCellValue(getDatiFromMattinale.getListaRagioniSociali().get(i));
 
 
-            //salvo l'esito
-            Cell cellEsito = sh.getRow(22).getCell(2);
+                //salvo data e ora dell'evento
+                Cell cellDataEOra = sh.getRow(17).getCell(4);
 
-            cellEsito.setCellValue(getDatiFromMattinale.getListaEsiti().get(i));
+                cellDataEOra.setCellValue(getDatiFromMattinale.getListaDateEOra().get(i).toLocaleString());
 
-            String percorsoRapportExcelCreato = MainController.getCartellaDeiRapportiCreatiXLS() + "\\" + listaNomiFile.get(i);
+                //faccio il time stamp della creazione del file
+                Cell cellTimeStamp = sh.getRow(8).getCell(1);
 
+                cellTimeStamp.setCellValue(timestamp.toString().substring(0, 19));//per tagliare i millesimi
 
-          //  System.out.println(cellRagioneSociale.toString());
+                //salvo il tipo di segnalazione
+                Cell cellTipoSegnalazione = sh.getRow(18).getCell(2);
 
-
-
-
-            fos = new FileOutputStream(percorsoRapportExcelCreato);
-            wb.write(fos);
-
-            //evitare che chieda di salvare il file alla chiusura
-
-            fos.flush();
+                cellTipoSegnalazione.setCellValue(getDatiFromMattinale.getListaTipoAllarme().get(i));
 
 
-            fos.close();
+                //salvo l'esito
+                Cell cellEsito = sh.getRow(22).getCell(2);
 
-            fis.close();
+                cellEsito.setCellValue(getDatiFromMattinale.getListaEsiti().get(i));
+
+                String percorsoRapportExcelCreato = MainController.getCartellaDeiRapportiCreatiXLS() + "\\" + listaNomiFile.get(i);
 
 
-            XlsToPDF xls2PDF = new XlsToPDF();
-            String nomeFileSenzaXLS = listaNomiFile.get(i).replaceAll(".xlsx", "");
-System.out.println("scrittura script");
-            // xls2PDF.writeNewScript(percorsoRapportExcelCreato, getPercorsoMaster()+"\\Pdf_WHATAFUCK\\"+listaNomiFile.get(i));
-            //JAVAFX
-            xls2PDF.writeNewScript(percorsoRapportExcelCreato, MainController.getCartellaDeiRapportiCreatiPDF() + "\\" + nomeFileSenzaXLS + estensionePDF);
-          // Thread.sleep(3300);
-    //   }
+                //  System.out.println(cellRagioneSociale.toString());
+
+
+                fos = new FileOutputStream(percorsoRapportExcelCreato);
+                wb.write(fos);
+
+                //evitare che chieda di salvare il file alla chiusura
+
+                fos.flush();
+
+
+                fos.close();
+
+                fis.close();
+            }
+         catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("Errore nella conversione");
+            return false;
+        }
+            try
+            {
+                String percorsoRapportExcelCreato = MainController.getCartellaDeiRapportiCreatiXLS() + "\\" + listaNomiFile.get(i);
+                XlsToPDF xls2PDF = new XlsToPDF();
+                String nomeFileSenzaXLS = listaNomiFile.get(i).replaceAll(".xlsx", "");
+                System.out.println("scrittura script");
+                // xls2PDF.writeNewScript(percorsoRapportExcelCreato, getPercorsoMaster()+"\\Pdf_WHATAFUCK\\"+listaNomiFile.get(i));
+                //JAVAFX
+                xls2PDF.writeNewScript(percorsoRapportExcelCreato, MainController.getCartellaDeiRapportiCreatiPDF() + "\\" + nomeFileSenzaXLS + estensionePDF);
+                // Thread.sleep(3300);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+                System.out.println("Errore nella conversione");
+                return false;
+
+            }
+
+
+
+       }
         salvaUltimoIdRapport();
         wb.getCreationHelper().createFormulaEvaluator().evaluateAll();
         wb.close();
         fos.close();	//********** ATTENZIONE NUOVI PER PROVARE CHIUSURA FILE *************
+
+        return  true;
     }
 
     public void metodoCheConverte()
